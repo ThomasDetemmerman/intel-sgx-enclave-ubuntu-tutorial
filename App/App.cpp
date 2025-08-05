@@ -2,7 +2,7 @@
 #include <string.h>
 
 # define ENCLAVE_FILENAME "enclave.signed.so"
-
+#include <sgx_report.h>
 #include "sgx_urts.h"
 #include "App.h"
 #include "Enclave_u.h"
@@ -36,20 +36,13 @@ int SGX_CDECL main(int argc, char *argv[])
     printf("Enclave initialized successfully. Starting attestation\n");
     //perform attestation
     // 1) Get report from enclave
-     #define REPORT_SIZE sizeof(sgx_report_t)
-    uint8_t report_buf[REPORT_SIZE] = {0};
-
-    ret = get_enclave_report(global_eid, report_buf, REPORT_SIZE);
-    if (ret != SGX_SUCCESS) {
-        printf("Error getting enclave report\n");
+    sgx_report_t report;
+    ret = get_enclave_report(global_eid, &report); 
+    if (ret != SGX_SUCCESS) { 
+        printf("Error with getting attestation\n");
         getchar();
         return -1;
     }
-
-    // Cast back to sgx_report_t pointer
-    sgx_report_t *report = (sgx_report_t *)report_buf;
-
-    
     // 2) Get quote size
     uint32_t quote_size = 0;
     ret = sgx_get_quote_size(NULL, &quote_size);
@@ -73,7 +66,6 @@ int SGX_CDECL main(int argc, char *argv[])
         return -1;
     }
     printf("Attestation successful. Quote size: %d\n", quote_size);
-    
     // invoke trusted_func01();
     int returned_result;
     ret = trusted_func01(global_eid, &returned_result);
