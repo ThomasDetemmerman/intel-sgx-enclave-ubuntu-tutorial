@@ -191,7 +191,8 @@ int SGX_CDECL main(int argc, char *argv[])
 	printf("\nExecuted command '%s' with the result:%u", cmd.c_str(), result);
     printf("\nStep5: Saving quote to JSON file, cert_key_type = 0x%x, output file name = %s\n", p_cert_data->cert_key_type, file.c_str());
     FILE *fp = fopen(file.c_str(), "w");*/
-    printf( "%s\n", "{");
+    printf("\nAttestation report:\n");
+    printf( "\%s\n", "{");
     printf( "  \"Type\": %d,\n", (int)2);
     // In open-enclave sdk enclave type 2 means OE_ENCLAVE_TYPE_SGX: 
     // https://github.com/openenclave/openenclave/blob/3e15573418caed43f9094ff8aec36cdde4f278f7/include/openenclave/bits/types.h#L127
