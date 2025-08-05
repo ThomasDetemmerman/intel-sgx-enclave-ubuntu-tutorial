@@ -134,7 +134,7 @@ int SGX_CDECL main(int argc, char *argv[])
     }
  
     //----------------------------------------------
-    printf("\nStep1: Call sgx_qe_get_target_info: ");
+    printf("\nStep1: Call sgx_qe_get_target_info ");
 
 
 
@@ -152,11 +152,11 @@ int SGX_CDECL main(int argc, char *argv[])
 
     //----- second part ----------------------------------------------
 
-    printf("\nStep3: Call sgx_qe_get_quote_size: ");
+    printf("\nStep3: Call sgx_qe_get_quote_size ");
 
     uint32_t quote_size = 0;
     sgx_qe_get_quote_size(&quote_size);
-        printf("succeed! Quote size = %u\n", quote_size);
+    printf("\nQuote size = %u\n", quote_size);
     //----- third part ----------------------------------------------
 
     uint8_t* p_quote_buffer = (uint8_t*)malloc(quote_size);
@@ -202,7 +202,7 @@ int SGX_CDECL main(int argc, char *argv[])
     printf( "  \"Attributes\": %lu,\n", (uint64_t)app_report.body.attributes.flags);
     printf( "  \"QuoteHex\": \"%s\",\n", format_hex_buffer(hex_buffer, hex_buffer_size, p_quote_buffer, quote_size));
     printf( "  \"EnclaveHeldDataHex\": \"%s\"\n", format_hex_buffer(hex_buffer, hex_buffer_size, enclave_held_data, sizeof( enclave_held_data)));
-    printf( "%s\n", "}");
+    printf( "%s\n\n", "}");
     //fclose(fp);
 
     /*if (NULL != p_quote_buffer) {
