@@ -21,7 +21,6 @@
 #include "sgx_error.h"   /* sgx_status_t */
 #include "sgx_eid.h"     /* sgx_enclave_id_t */
 #include "sgx_urts.h"
-#include "enclave_u.h"
 #include "sgx_quote_3.h"
 #include "sgx_dcap_ql_wrapper.h"
 // einde extras -----
