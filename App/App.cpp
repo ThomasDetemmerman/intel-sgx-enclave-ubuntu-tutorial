@@ -96,6 +96,8 @@ int SGX_CDECL main(int argc, char *argv[])
         printf("Enclave init error\n");
         getchar();
         return -1;
+    } else {
+        printf("Enclave initialized successfully\n");
     }
  
     //----------------------------------------------
