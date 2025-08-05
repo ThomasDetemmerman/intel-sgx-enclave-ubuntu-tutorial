@@ -191,18 +191,18 @@ int SGX_CDECL main(int argc, char *argv[])
 	printf("\nExecuted command '%s' with the result:%u", cmd.c_str(), result);
     printf("\nStep5: Saving quote to JSON file, cert_key_type = 0x%x, output file name = %s\n", p_cert_data->cert_key_type, file.c_str());
     FILE *fp = fopen(file.c_str(), "w");*/
-    printf(fp, "%s\n", "{");
-    printf(fp, "  \"Type\": %d,\n", (int)2);
+    printf( "%s\n", "{");
+    printf( "  \"Type\": %d,\n", (int)2);
     // In open-enclave sdk enclave type 2 means OE_ENCLAVE_TYPE_SGX: 
     // https://github.com/openenclave/openenclave/blob/3e15573418caed43f9094ff8aec36cdde4f278f7/include/openenclave/bits/types.h#L127
-    printf(fp, "  \"MrEnclaveHex\": \"%s\",\n", format_hex_buffer(hex_buffer, hex_buffer_size, app_report.body.mr_enclave.m, SGX_HASH_SIZE));
-    printf(fp, "  \"MrSignerHex\": \"%s\",\n", format_hex_buffer(hex_buffer, hex_buffer_size, app_report.body.mr_signer.m, SGX_HASH_SIZE));
-    printf(fp, "  \"ProductIdHex\": \"%s\",\n", uint16_to_buffer(hex_buffer, hex_buffer_size,(uint16_t)app_report.body.isv_prod_id, 16));
-    printf(fp, "  \"SecurityVersion\": %u,\n", (int)app_report.body.isv_svn);
-    printf(fp, "  \"Attributes\": %lu,\n", (uint64_t)app_report.body.attributes.flags);
-    printf(fp, "  \"QuoteHex\": \"%s\",\n", format_hex_buffer(hex_buffer, hex_buffer_size, p_quote_buffer, quote_size));
-    printf(fp, "  \"EnclaveHeldDataHex\": \"%s\"\n", format_hex_buffer(hex_buffer, hex_buffer_size, enclave_held_data, sizeof( enclave_held_data)));
-    printf(fp, "%s\n", "}");
+    printf( "  \"MrEnclaveHex\": \"%s\",\n", format_hex_buffer(hex_buffer, hex_buffer_size, app_report.body.mr_enclave.m, SGX_HASH_SIZE));
+    printf( "  \"MrSignerHex\": \"%s\",\n", format_hex_buffer(hex_buffer, hex_buffer_size, app_report.body.mr_signer.m, SGX_HASH_SIZE));
+    printf( "  \"ProductIdHex\": \"%s\",\n", uint16_to_buffer(hex_buffer, hex_buffer_size,(uint16_t)app_report.body.isv_prod_id, 16));
+    printf( "  \"SecurityVersion\": %u,\n", (int)app_report.body.isv_svn);
+    printf( "  \"Attributes\": %lu,\n", (uint64_t)app_report.body.attributes.flags);
+    printf( "  \"QuoteHex\": \"%s\",\n", format_hex_buffer(hex_buffer, hex_buffer_size, p_quote_buffer, quote_size));
+    printf( "  \"EnclaveHeldDataHex\": \"%s\"\n", format_hex_buffer(hex_buffer, hex_buffer_size, enclave_held_data, sizeof( enclave_held_data)));
+    printf( "%s\n", "}");
     //fclose(fp);
 
     /*if (NULL != p_quote_buffer) {
