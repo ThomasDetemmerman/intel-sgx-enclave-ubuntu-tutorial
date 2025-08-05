@@ -64,7 +64,7 @@ bool create_app_enclave_report(const char* enclave_path, sgx_target_info_t qe_ta
         return ret;
     }
 */
-    sgx_status = enclave_create_report(eid,
+    sgx_status = enclave_create_report(ENCLAVE_FILENAME,
                                        &retval,
                                        &qe_target_info,
                                        p_data,
