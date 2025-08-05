@@ -3,7 +3,6 @@
 #include <sgx_tcrypto.h>
 #include <sgx_trts.h>
 #include <sgx_tkey_exchange.h>
-#include "enclave_t.h"
 #include "sgx_trts.h"
 #include "sgx_error.h"
 #include "sgx_report.h"

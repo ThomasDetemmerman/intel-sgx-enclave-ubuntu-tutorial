@@ -8,7 +8,6 @@
 #include <sstream>
 #include <openssl/sha.h>
 
-#define ENCLAVE_FILENAME "enclave.signed.so"
 #include "sgx_error.h"   /* sgx_status_t */
 #include "sgx_eid.h"     /* sgx_enclave_id_t */
 #include "sgx_urts.h"
