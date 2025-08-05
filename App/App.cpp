@@ -116,6 +116,17 @@ int SGX_CDECL main(int argc, char *argv[])
         }
         printf("succeed!\n");
 
+    //----- second part ----------------------------------------------
+
+    printf("\nStep3: Call sgx_qe_get_quote_size: ");
+    uint32_t quote_size = 0;
+    qe3_ret = sgx_qe_get_quote_size(&quote_size);
+    if (SGX_QL_SUCCESS != qe3_ret) {
+        printf("Error in sgx_qe_get_quote_size. 0x%04x\n", qe3_ret);
+        return -1;
+    }
+    printf("succeed!\n");
+
 
     //---------------------------------------------
     // invoke trusted_func01();
