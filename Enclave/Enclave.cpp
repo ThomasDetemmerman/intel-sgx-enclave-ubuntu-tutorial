@@ -1,4 +1,3 @@
-#include "Enclave_t.h"
 #include <stdio.h>
 #include <string.h>
 #include <sgx_tcrypto.h>
