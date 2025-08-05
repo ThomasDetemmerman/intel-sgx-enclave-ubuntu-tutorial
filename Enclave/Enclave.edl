@@ -9,7 +9,7 @@ public uint32_t enclave_create_report([in]const sgx_target_info_t* p_qe3_target,
 
     };
     
-    };
+
 
     untrusted {
         void ocall_wait_keyinput([in, string] const char *str);
