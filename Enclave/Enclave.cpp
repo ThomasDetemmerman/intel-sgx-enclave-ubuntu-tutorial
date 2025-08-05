@@ -1,12 +1,6 @@
+#include "Enclave_t.h"
 #include <stdio.h>
 #include <string.h>
-#include <sgx_tcrypto.h>
-#include <sgx_trts.h>
-#include <sgx_tkey_exchange.h>
-#include "sgx_trts.h"
-#include "sgx_error.h"
-#include "sgx_report.h"
-#include "sgx_utils.h"
 
 int trusted_func01()
 {
