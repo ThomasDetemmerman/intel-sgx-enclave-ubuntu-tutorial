@@ -100,7 +100,7 @@ int SGX_CDECL main(int argc, char *argv[])
 
     return 0;
 }
-
+/*
 bool create_app_enclave_report(const char *enclave_path,
                                sgx_target_info_t qe_target_info,
                                sgx_report_t *app_report,
@@ -142,4 +142,4 @@ bool create_app_enclave_report(const char *enclave_path,
 
     sgx_destroy_enclave(eid);
     return ret;
-}
+}*/
