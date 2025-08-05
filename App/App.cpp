@@ -1,5 +1,12 @@
+#include <assert.h>
 #include <stdio.h>
-#include <string.h>
+#include <stdlib.h>
+#include <stdarg.h>
+#include <string>
+#include <iostream>
+#include <iomanip>
+#include <sstream>
+#include <openssl/sha.h>
 
 #define ENCLAVE_FILENAME "enclave.signed.so"
 #include "sgx_error.h"   /* sgx_status_t */
@@ -8,6 +15,12 @@
 #include "sgx_urts.h"
 #include "App.h"
 #include "Enclave_u.h"
+#include "sgx_quote_3.h"
+#include "sgx_dcap_ql_wrapper.h"
+
+
+using namespace std;
+
 
 sgx_enclave_id_t global_eid = 0;
 bool create_app_enclave_report(const char *enclave_path,
@@ -42,6 +55,22 @@ int SGX_CDECL main(int argc, char *argv[])
     }
     printf("Enclave initialized successfully. Starting attestation\n");
 
+    //-----------------------------------------------------------------
+     printf("\nStep1: Call sgx_qe_get_target_info: ");
+    sgx_target_info_t qe_target_info;
+    quote3_error_t qe3_ret = sgx_qe_get_target_info(&qe_target_info);
+    if (SGX_QL_SUCCESS != qe3_ret) {
+        printf("Error in sgx_qe_get_target_info. 0x%04x\n", qe3_ret);
+        return -1;
+    }
+    printf("succeed!\n");
+
+    uint8_t enclave_held_data[6] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06};
+    sgx_report_data_t hash;
+    sha256sum(enclave_held_data, 6, hash.d);
+    //printh(hash.d, sizeof(hash.d));
+
+    //-----------------------------------------------------------------
     printf("\nStep2: Call create_app_report: ");
     sgx_report_t app_report;
     if (true != create_app_enclave_report(argv[1], qe_target_info, &app_report, &hash))
@@ -51,6 +80,7 @@ int SGX_CDECL main(int argc, char *argv[])
     }
     printf("succeed!\n");
 
+    //-----------------------------------------------------------------
     printf("Attestation successful. Quote size: %d\n", quote_size);
     // invoke trusted_func01();
     int returned_result;
