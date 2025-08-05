@@ -20,6 +20,5 @@ uint32_t enclave_create_report(const sgx_target_info_t* p_qe3_target,
                 const sgx_report_data_t* p_data,
 		sgx_report_t* p_report)
 {
-    ocall_wait_keyinput("Inside enclave_create_report() ....  Hit any key to create report ...");
     return sgx_create_report(p_qe3_target, p_data, p_report);
 }
