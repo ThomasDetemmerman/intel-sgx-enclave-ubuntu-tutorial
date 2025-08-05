@@ -153,9 +153,10 @@ int SGX_CDECL main(int argc, char *argv[])
     //----- second part ----------------------------------------------
 
     printf("\nStep3: Call sgx_qe_get_quote_size: ");
+
     uint32_t quote_size = 0;
     sgx_qe_get_quote_size(&quote_size);
-
+        printf("succeed! Quote size = %u\n", quote_size);
     //----- third part ----------------------------------------------
 
     uint8_t* p_quote_buffer = (uint8_t*)malloc(quote_size);
