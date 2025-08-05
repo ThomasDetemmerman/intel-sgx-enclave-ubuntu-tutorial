@@ -79,9 +79,10 @@ int SGX_CDECL main(int argc, char *argv[])
         return -1;
     }
     printf("succeed!\n");
+    printf("Attestation successful. Quote size: %d\n", quote_size);
 */
     //-----------------------------------------------------------------
-    printf("Attestation successful. Quote size: %d\n", quote_size);
+    
     // invoke trusted_func01();
     int returned_result;
     ret = trusted_func01(global_eid, &returned_result);
