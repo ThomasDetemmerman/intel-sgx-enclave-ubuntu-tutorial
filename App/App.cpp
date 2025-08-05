@@ -64,11 +64,11 @@ bool create_app_enclave_report(const char* enclave_path, sgx_target_info_t qe_ta
         return ret;
     }
 */
-    sgx_status = enclave_create_report(global_eid,
+    sgx_status = enclave_create_report(&global_eid,
                                        &retval,
                                        &qe_target_info,
                                        p_data,
-				       app_report);
+				                        app_report);
      printf("sgx_status: %04x. Expected value for success is %04x\n", sgx_status, SGX_SUCCESS);
     printf("Enclave create report returned: %d\n", retval);
     if ((SGX_SUCCESS != sgx_status) || (0 != retval)) {
