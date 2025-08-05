@@ -2,7 +2,9 @@
 #include <string.h>
 
 #define ENCLAVE_FILENAME "enclave.signed.so"
-#include <sgx_report.h>
+#include "sgx_error.h"   /* sgx_status_t */
+#include "sgx_eid.h"     /* sgx_enclave_id_t */
+#include "sgx_urts.h"
 #include "sgx_urts.h"
 #include "App.h"
 #include "Enclave_u.h"
