@@ -111,7 +111,7 @@ int SGX_CDECL main(int argc, char *argv[])
     
     sgx_target_info_t qe_target_info;
     sgx_report_t app_report;
-     quote3_error_t qe3_ret = sgx_qe_get_target_info(&qe_target_info);
+    //  quote3_error_t qe3_ret = sgx_qe_get_target_info(&qe_target_info);
     uint8_t enclave_held_data[6] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06};
     sgx_report_data_t hash;
     sha256sum(enclave_held_data, 6, hash.d);
