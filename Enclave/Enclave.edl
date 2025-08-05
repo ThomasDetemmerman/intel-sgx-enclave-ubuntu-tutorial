@@ -1,6 +1,7 @@
 enclave {
     trusted {
         public int trusted_func01(void);
+        public sgx_status_t get_enclave_report([out] sgx_report_t* report);
     };
 
     untrusted {
