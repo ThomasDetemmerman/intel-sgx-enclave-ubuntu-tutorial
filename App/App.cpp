@@ -50,8 +50,8 @@ bool create_app_enclave_report(const char* enclave_path, sgx_target_info_t qe_ta
     sgx_enclave_id_t eid = 0;
     int launch_token_updated = 0;
     sgx_launch_token_t launch_token = { 0 };
-
-    sgx_status = sgx_create_enclave(enclave_path,
+    // delete because already in calling function
+    /*sgx_status = sgx_create_enclave(enclave_path,
                                     SGX_DEBUG_FLAG,
                                     &launch_token,
                                     &launch_token_updated,
@@ -63,7 +63,7 @@ bool create_app_enclave_report(const char* enclave_path, sgx_target_info_t qe_ta
         sgx_destroy_enclave(eid);
         return ret;
     }
-
+*/
     sgx_status = enclave_create_report(eid,
                                        &retval,
                                        &qe_target_info,
