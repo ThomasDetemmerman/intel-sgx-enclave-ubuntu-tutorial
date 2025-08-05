@@ -108,19 +108,21 @@ int SGX_CDECL main(int argc, char *argv[])
 
 
 
-    
+    int ret = 0;
+
+    printf("\nStep1: Call sgx_qe_get_target_info: ");
     sgx_target_info_t qe_target_info;
-    sgx_report_t app_report;
     quote3_error_t qe3_ret = sgx_qe_get_target_info(&qe_target_info);
+    if (SGX_QL_SUCCESS != qe3_ret) {
+        printf("Error in sgx_qe_get_target_info. 0x%04x\n", qe3_ret);
+        return -1;
+    }
+    printf("succeed!\n");
+
     uint8_t enclave_held_data[6] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06};
     sgx_report_data_t hash;
     sha256sum(enclave_held_data, 6, hash.d);
-    if(true != create_app_enclave_report(argv[1], qe_target_info, &app_report, &hash)) {
-            printf("Call to create_app_report() failed\n");
-            return -1;
-        }
-        printf("succeed!\n");
-
+    //printh(hash.d, sizeof(hash.d));
     //----- second part ----------------------------------------------
 
 
