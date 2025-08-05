@@ -27,6 +27,14 @@
 
 sgx_enclave_id_t global_eid = 0;
 
+void sha256sum(const uint8_t *data, uint32_t data_size, uint8_t *hash)
+{
+    SHA256_CTX sha256;
+    SHA256_Init(&sha256);
+    SHA256_Update(&sha256, data, data_size);
+    SHA256_Final(hash, &sha256);
+}
+
 /* ocall functions (untrusted) */
 void ocall_wait_keyinput(const char *str)
 {
