@@ -108,7 +108,6 @@ int SGX_CDECL main(int argc, char *argv[])
 
 
 
-    int ret = 0;
 
     printf("\nStep1: Call sgx_qe_get_target_info: ");
     sgx_target_info_t qe_target_info;
