@@ -56,7 +56,7 @@ int SGX_CDECL main(int argc, char *argv[])
     printf("Enclave initialized successfully. Starting attestation\n");
 
     //-----------------------------------------------------------------
-     printf("\nStep1: Call sgx_qe_get_target_info: ");
+  /*   printf("\nStep1: Call sgx_qe_get_target_info: ");
     sgx_target_info_t qe_target_info;
     quote3_error_t qe3_ret = sgx_qe_get_target_info(&qe_target_info);
     if (SGX_QL_SUCCESS != qe3_ret) {
@@ -79,7 +79,7 @@ int SGX_CDECL main(int argc, char *argv[])
         return -1;
     }
     printf("succeed!\n");
-
+*/
     //-----------------------------------------------------------------
     printf("Attestation successful. Quote size: %d\n", quote_size);
     // invoke trusted_func01();
