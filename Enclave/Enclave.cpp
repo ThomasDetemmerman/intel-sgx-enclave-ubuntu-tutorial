@@ -13,11 +13,9 @@ int trusted_func01()
     return trusted_x;
 }
 
-sgx_status_t get_enclave_report(sgx_report_t *report)
+uint32_t enclave_create_report(const sgx_target_info_t* p_qe3_target,
+                const sgx_report_data_t* p_data,
+		sgx_report_t* p_report)
 {
-    if (report == NULL)
-        return SGX_ERROR_INVALID_PARAMETER;
-
-    sgx_status_t status = sgx_create_report(NULL, NULL, report);
-    return status;
+    return sgx_create_report(p_qe3_target, p_data, p_report);
 }

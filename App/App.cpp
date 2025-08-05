@@ -1,13 +1,17 @@
 #include <stdio.h>
 #include <string.h>
 
-# define ENCLAVE_FILENAME "enclave.signed.so"
+#define ENCLAVE_FILENAME "enclave.signed.so"
 #include <sgx_report.h>
 #include "sgx_urts.h"
 #include "App.h"
 #include "Enclave_u.h"
 
 sgx_enclave_id_t global_eid = 0;
+bool create_app_enclave_report(const char *enclave_path,
+                               sgx_target_info_t qe_target_info,
+                               sgx_report_t *app_report,
+                               const sgx_report_data_t *p_data);
 
 /* ocall functions (untrusted) */
 void ocall_wait_keyinput(const char *str)
@@ -28,48 +32,29 @@ int SGX_CDECL main(int argc, char *argv[])
 
     // initialize enclave
     ret = sgx_create_enclave(ENCLAVE_FILENAME, SGX_DEBUG_FLAG, NULL, NULL, &global_eid, NULL);
-    if (ret != SGX_SUCCESS) {
+    if (ret != SGX_SUCCESS)
+    {
         printf("Enclave init error\n");
         getchar();
         return -1;
     }
     printf("Enclave initialized successfully. Starting attestation\n");
-    //perform attestation
-    // 1) Get report from enclave
-    sgx_report_t report;
-    ret = get_enclave_report(global_eid, &report); 
-    if (ret != SGX_SUCCESS) { 
-        printf("Error with getting attestation\n");
-        getchar();
+
+    printf("\nStep2: Call create_app_report: ");
+    sgx_report_t app_report;
+    if (true != create_app_enclave_report(argv[1], qe_target_info, &app_report, &hash))
+    {
+        printf("Call to create_app_report() failed\n");
         return -1;
     }
-    // 2) Get quote size
-    uint32_t quote_size = 0;
-    ret = sgx_get_quote_size(NULL, &quote_size);
-    if (ret != SGX_SUCCESS) { 
-        printf("Error getting the size of the quote\n");
-        getchar();
-        return -1;
-    }
-    // 3) Allocate buffer for quote
-    uint8_t *quote = malloc(quote_size);
-    if (!quote) { 
-        printf("Error allocating buffer for quote\n");
-        getchar();
-        return -1;
-    }
-    // 4) Get quote from report
-    ret = sgx_get_quote(&report, SGX_LINKABLE_SIGNATURE, NULL, 0, NULL, quote, quote_size);
-    if (ret != SGX_SUCCESS)  { 
-        printf("Error getting quote from report\n");
-        getchar();
-        return -1;
-    }
+    printf("succeed!\n");
+
     printf("Attestation successful. Quote size: %d\n", quote_size);
     // invoke trusted_func01();
     int returned_result;
     ret = trusted_func01(global_eid, &returned_result);
-    if (ret != SGX_SUCCESS) {
+    if (ret != SGX_SUCCESS)
+    {
         printf("Enclave call error\n");
         return -1;
     }
@@ -77,9 +62,51 @@ int SGX_CDECL main(int argc, char *argv[])
     // destroy the enclave
     sgx_destroy_enclave(global_eid);
 
-    printf ("X (untrusted): %d\n", untrusted_x);
-    printf ("X (trusted): %d\n", returned_result);
+    printf("X (untrusted): %d\n", untrusted_x);
+    printf("X (trusted): %d\n", returned_result);
 
     return 0;
 }
 
+bool create_app_enclave_report(const char *enclave_path,
+                               sgx_target_info_t qe_target_info,
+                               sgx_report_t *app_report,
+                               const sgx_report_data_t *p_data)
+{
+    bool ret = true;
+    uint32_t retval = 0;
+    sgx_status_t sgx_status = SGX_SUCCESS;
+    sgx_enclave_id_t eid = 0;
+    int launch_token_updated = 0;
+    sgx_launch_token_t launch_token = {0};
+
+    sgx_status = sgx_create_enclave(enclave_path,
+                                    SGX_DEBUG_FLAG,
+                                    &launch_token,
+                                    &launch_token_updated,
+                                    &eid,
+                                    NULL);
+    if (SGX_SUCCESS != sgx_status)
+    {
+        printf("Error, call sgx_create_enclave fail [%s], SGXError:%04x.\n", __FUNCTION__, sgx_status);
+        ret = false;
+        sgx_destroy_enclave(eid);
+        return ret;
+    }
+
+    sgx_status = enclave_create_report(eid,
+                                       &retval,
+                                       &qe_target_info,
+                                       p_data,
+                                       app_report);
+    if ((SGX_SUCCESS != sgx_status) || (0 != retval))
+    {
+        printf("\nCall to get_app_enclave_report() failed\n");
+        ret = false;
+        sgx_destroy_enclave(eid);
+        return ret;
+    }
+
+    sgx_destroy_enclave(eid);
+    return ret;
+}
