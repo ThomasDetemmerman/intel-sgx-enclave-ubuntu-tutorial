@@ -125,6 +125,21 @@ int SGX_CDECL main(int argc, char *argv[])
     printf("\nStep3: Call sgx_qe_get_quote_size: ");
     uint32_t quote_size = 0;
     sgx_qe_get_quote_size(&quote_size);
+
+    //----- third part ----------------------------------------------
+
+    uint8_t* p_quote_buffer = (uint8_t*)malloc(quote_size);
+    if (NULL == p_quote_buffer) {
+        printf("\nCouldn't allocate quote_buffer\n");
+        if (NULL != p_quote_buffer) {
+            free(p_quote_buffer);
+        }
+        return -1;
+    }
+    memset(p_quote_buffer, 0, quote_size);
+
+    printf("\nStep4: Call sgx_qe_get_quote: ");
+    sgx_qe_get_quote(&app_report, quote_size, p_quote_buffer);
     
     //---------------------------------------------
     // invoke trusted_func01();
