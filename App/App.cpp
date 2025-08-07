@@ -176,7 +176,7 @@ int SGX_CDECL main(int argc, char *argv[])
 
     //----- fourth part ----------------------------------------------
     //std::string base64_quote = base64_encode(p_quote_buffer, quote_size);
-    printf("\n\t> Quote = %u\n", base64_quote);
+    //printf("\n\t> Quote = %u\n", base64_quote);
 
     sgx_quote3_t *p_quote = (_sgx_quote3_t*)p_quote_buffer;
     sgx_ql_ecdsa_sig_data_t *p_sig_data = (sgx_ql_ecdsa_sig_data_t *)p_quote->signature_data;
