@@ -136,18 +136,8 @@ int SGX_CDECL main(int argc, char *argv[])
     //----------------------------------------------
     printf("\nStep1: Call sgx_qe_get_target_info ");
 
-    sgx_target_info_t target_info;
-    sgx_report_data_t report_data;
-    sgx_report_t report;
-    memset(&report_data, 0, sizeof(report_data));
-    // Optionally fill report_data.d with 64 bytes of custom data
-    sgx_status_t status = sgx_create_report(&target_info, &report_data, &report);
-    if (status != SGX_SUCCESS) {
-        printf("report error\n");
-    }
 
-    
-    /*sgx_target_info_t qe_target_info;
+    sgx_target_info_t qe_target_info;
     sgx_report_t app_report;
     uint8_t enclave_held_data[6] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06};
     sgx_report_data_t hash;
@@ -182,7 +172,8 @@ int SGX_CDECL main(int argc, char *argv[])
     sgx_qe_get_quote(&app_report, quote_size, p_quote_buffer);
 
     //----- fourth part ----------------------------------------------
-
+    std::string base64_quote = base64_encode(p_quote_buffer, quote_size);
+    printf("\n\t> Quote = %u\n", base64_quote);
 
     sgx_quote3_t *p_quote = (_sgx_quote3_t*)p_quote_buffer;
     sgx_ql_ecdsa_sig_data_t *p_sig_data = (sgx_ql_ecdsa_sig_data_t *)p_quote->signature_data;
@@ -192,7 +183,7 @@ int SGX_CDECL main(int argc, char *argv[])
 
     const int hex_buffer_size = 1024*64;
     char hex_buffer[hex_buffer_size];
-*/
+
     /*std::string output_dir("./out/");
     std::string cmd("mkdir -p " + output_dir);
     std::string file(output_dir + "quote.json");
@@ -205,7 +196,7 @@ int SGX_CDECL main(int argc, char *argv[])
     printf( "  \"Type\": %d,\n", (int)2);
     // In open-enclave sdk enclave type 2 means OE_ENCLAVE_TYPE_SGX: 
     // https://github.com/openenclave/openenclave/blob/3e15573418caed43f9094ff8aec36cdde4f278f7/include/openenclave/bits/types.h#L127
-    /*
+    
     printf( "  \"MrEnclaveHex\": \"%s\",\n", format_hex_buffer(hex_buffer, hex_buffer_size, app_report.body.mr_enclave.m, SGX_HASH_SIZE));
     printf( "  \"MrSignerHex\": \"%s\",\n", format_hex_buffer(hex_buffer, hex_buffer_size, app_report.body.mr_signer.m, SGX_HASH_SIZE));
     printf( "  \"ProductIdHex\": \"%s\",\n", uint16_to_buffer(hex_buffer, hex_buffer_size,(uint16_t)app_report.body.isv_prod_id, 16));
@@ -215,7 +206,7 @@ int SGX_CDECL main(int argc, char *argv[])
     printf( "  \"EnclaveHeldDataHex\": \"%s\"\n", format_hex_buffer(hex_buffer, hex_buffer_size, enclave_held_data, sizeof( enclave_held_data)));
     printf( "%s\n\n", "}");
     //fclose(fp);
-*/
+
     /*if (NULL != p_quote_buffer) {
         free(p_quote_buffer);
     }*/

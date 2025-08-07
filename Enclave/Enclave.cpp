@@ -22,3 +22,5 @@ uint32_t enclave_create_report(const sgx_target_info_t* p_qe3_target,
 {
     return sgx_create_report(p_qe3_target, p_data, p_report);
 }
+
+
