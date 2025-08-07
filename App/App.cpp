@@ -176,7 +176,7 @@ int SGX_CDECL main(int argc, char *argv[])
     sgx_qe_get_quote(&app_report, quote_size, p_quote_buffer);
 
     //----- fourth part ----------------------------------------------
-    std::string base64_quote = base64_encode(p_quote_buffer, quote_size);
+    //std::string base64_quote = base64_encode(p_quote_buffer, quote_size);
     printf("\n\t> Quote = %u\n", base64_quote);
 
     sgx_quote3_t *p_quote = (_sgx_quote3_t*)p_quote_buffer;
