@@ -23,6 +23,10 @@
 #include "sgx_urts.h"
 #include "sgx_quote_3.h"
 #include "sgx_dcap_ql_wrapper.h"
+
+
+#include "base64.h"
+
 // einde extras -----
 
 sgx_enclave_id_t global_eid = 0;
