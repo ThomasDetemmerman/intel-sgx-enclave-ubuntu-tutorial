@@ -25,7 +25,6 @@
 #include "sgx_dcap_ql_wrapper.h"
 
 
-#include "base64.h"
 
 // einde extras -----
 
